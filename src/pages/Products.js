@@ -15,21 +15,27 @@ const Products = () => {
   
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('https://gearfitbackend.onrender.com/products');
-        if (!response.ok) throw new Error('Failed to fetch products');
-        const data = await response.json();
-        setProducts(data.products);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('https://gearfitbackend.onrender.com/products');
+      if (!response.ok) throw new Error('Failed to fetch products');
+      const data = await response.json();
 
-    fetchProducts();
-  }, []);
+      if (!data.products) {
+        throw new Error('API response missing "products" field');
+      }
+
+      setProducts(data.products);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchProducts();
+}, []);
+
 
   const handleAddToCart = (product) => {
     addToCart(product); // that's it
