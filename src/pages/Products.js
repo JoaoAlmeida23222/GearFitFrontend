@@ -4,7 +4,7 @@ import './Products.css';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom'; // ✅ add this
 import Footer from '../components/Footer';
-import { showSuccess, showError } from '../components/toastUtils'; // ✅ import toast utils
+import { showSuccess } from '../components/toastUtils'; // ✅ import toast utils
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -17,7 +17,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/products');
+        const response = await fetch('https://gearfitbackend.onrender.com/products');
         if (!response.ok) throw new Error('Failed to fetch products');
         const data = await response.json();
         setProducts(data.products);
